@@ -57,3 +57,6 @@ set rtp+="/home/therb/.opam/4.06.1/share/ocp-indent/vim"
 " C, C++
 au FileType c setlocal colorcolumn=80 cindent
 au FileType cpp setlocal colorcolumn=80 cindent
+
+" Markdown
+au FileType markdown setlocal expandtab
