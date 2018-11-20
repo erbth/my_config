@@ -37,6 +37,9 @@ inoremap <C-l>	<Esc>:tabn<CR>a
 nnoremap <F12> :so $MYVIMRC<CR>
 nnoremap <F2> :noh<CR>
 
+" Update a tags file
+nnoremap <F5> :!ctags -R .<CR>
+
 " colorscheme elflord
 
 nnoremap <F4>	viwc<C-r>0<Esc>
@@ -54,6 +57,12 @@ au bufwritepost .vimrc source %
 au FileType ocaml setlocal expandtab
 set rtp+="/home/therb/.opam/4.06.1/share/ocp-indent/vim"
 
+" Assembly
+au FileType asm setlocal colorcolumn=80
+
 " C, C++
 au FileType c setlocal colorcolumn=80 cindent
 au FileType cpp setlocal colorcolumn=80 cindent
+
+" Python
+au FileType python setlocal colorcolumn=80
