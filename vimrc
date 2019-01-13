@@ -46,6 +46,9 @@ let g:LargeFile=10
 filetype plugin on
 filetype indent on
 
+" Cscope
+cs a cscope.out
+
 " Special support for different filetypes
 " .vimrc
 au bufwritepost .vimrc source %
