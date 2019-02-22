@@ -49,6 +49,9 @@ let g:LargeFile=10
 filetype plugin on
 filetype indent on
 
+" Cscope
+cs a cscope.out
+
 " Special support for different filetypes
 " .vimrc
 au bufwritepost .vimrc source %
@@ -66,3 +69,6 @@ au FileType cpp setlocal colorcolumn=80 cindent
 
 " Python
 au FileType python setlocal colorcolumn=80
+
+" Markdown
+au FileType markdown setlocal expandtab
