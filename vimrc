@@ -17,7 +17,6 @@ set guioptions-=T
 set tabstop=4
 set shiftwidth=4
 set mouse=a
-" set tw=80
 
 " Searching
 set ignorecase
@@ -51,6 +50,8 @@ let g:LargeFile=10
 filetype plugin on
 filetype indent on
 
+set fo=tcroqlj tw=80
+
 " Cscope
 cs a cscope.out
 
@@ -59,18 +60,21 @@ cs a cscope.out
 au bufwritepost .vimrc source %
 
 " OCaml
-au FileType ocaml setlocal expandtab
+au FileType ocaml setlocal expandtab fo-=t
 set rtp+="/home/therb/.opam/4.06.1/share/ocp-indent/vim"
 
 " Assembly
-au FileType asm setlocal colorcolumn=80
+au FileType asm setlocal colorcolumn=80 fo-=t
 
 " C, C++
-au FileType c setlocal colorcolumn=80 cindent
-au FileType cpp setlocal colorcolumn=80 cindent
+au FileType c setlocal colorcolumn=80 cindent fo-=t
+au FileType cpp setlocal colorcolumn=80 cindent fo-=t
 
 " Python
-au FileType python setlocal colorcolumn=80
+au FileType python setlocal colorcolumn=80 fo-=t
 
 " Markdown
 au FileType markdown setlocal expandtab
+
+" reStructuredText
+au FileType rst setlocal tw=80
