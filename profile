@@ -21,6 +21,10 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 # Include my i686-elf cross compiler's bin
 if [ -d "$HOME/opt/cross/bin" ]; then
 	PATH="$HOME/opt/cross/bin:$PATH"
