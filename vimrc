@@ -64,17 +64,17 @@ au FileType ocaml setlocal expandtab fo-=t
 set rtp+="/home/therb/.opam/4.06.1/share/ocp-indent/vim"
 
 " Assembly
-au FileType asm setlocal colorcolumn=80 fo-=t
+au FileType asm setlocal colorcolumn=81 fo-=t
 
 " C, C++
-au FileType c setlocal colorcolumn=80 cindent fo-=t
-au FileType cpp setlocal colorcolumn=80 cindent fo-=t
+au FileType c setlocal colorcolumn=81 cindent fo-=t
+au FileType cpp setlocal colorcolumn=81 cindent fo-=t
 
 " Python
-au FileType python setlocal colorcolumn=80 fo-=t
+au FileType python setlocal colorcolumn=80 tw=79 fo-=t
 
 " Markdown
 au FileType markdown setlocal expandtab
 
 " reStructuredText
-au FileType rst setlocal tw=80
+au FileType rst setlocal colorcolumn=81
