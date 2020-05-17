@@ -30,6 +30,11 @@ if [ -d "$HOME/opt/cross/bin" ]; then
 	PATH="$HOME/opt/cross/bin:$PATH"
 fi
 
+if [ -d "$HOME/.local/bin" ]
+then
+	PATH="$HOME/.local/bin:$PATH"
+fi
+
 # OPAM configuration
 if [ -x $HOME/.opam/opam-init/init.sh ]
 then
