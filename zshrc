@@ -29,7 +29,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 # if [ "$color_prompt" = yes ]; then
-PROMPT='%(?..%B%F{red}(%?%)%f%b )%B%F{green}%n@%m%f%b:%B%F{blue}%~%f%b%# '
+PROMPT='%B%F{green}%n@%m%f%b:%B%F{blue}%~%f%b%(?.%#.%B%F{red}%#%f%b) '
 # else
 #     PROMPT='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 # fi
