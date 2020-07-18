@@ -47,6 +47,24 @@ nnoremap <F4>	viwc<C-r>0<Esc>
 
 let g:LargeFile=10
 
+" Vundle.vim
+" filetype off
+" 
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
+" 
+" " let Vundle manage itself
+" Plugin 'VundleVim/Vundle.vim'
+" Bundle 'Rykka/riv.vim'
+" Bundle 'Rykka/InstantRst'
+" 
+" call vundle#end()
+" 
+" 
+" " riv configuration
+" let g:riv_global_leader=''
+
+
 filetype plugin on
 filetype indent on
 
@@ -69,6 +87,9 @@ au FileType asm setlocal colorcolumn=81 fo-=t
 " C, C++
 au FileType c setlocal colorcolumn=81 cindent fo-=t
 au FileType cpp setlocal colorcolumn=81 cindent fo-=t
+
+" cmake
+au FileType cmake setlocal colorcolumn=81 fo-=t
 
 " Python
 au FileType python setlocal colorcolumn=80 tw=79 fo-=t
