@@ -35,6 +35,16 @@ PROMPT='%B%F{green}%n@%m%f%b:%B%F{blue}%~%f%b%(?.%#.%B%F{red}%#%f%b) '
 # fi
 unset color_prompt force_color_prompt
 
+# Bash-style word navigation
+autoload -U select-word-style
+select-word-style bash
+
+# Skip words with arrow keys
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -62,3 +72,6 @@ export DEBEMAIL DEBFULLNAME
 
 # OPAM configuration
 . /home/therb/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+# Cross compiler
+# PATH="$HOME/software/gcc/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf/bin:$PATH"
