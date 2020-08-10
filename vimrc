@@ -13,6 +13,7 @@ set showmatch
 set wildmenu
 
 set guioptions-=T
+set guioptions-=m
 
 set tabstop=4
 set shiftwidth=4
