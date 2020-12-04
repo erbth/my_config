@@ -42,6 +42,10 @@ nnoremap <F2> :noh<CR>
 " Update a tags file
 nnoremap <F5> :!ctags -R .<CR>
 
+if &term == "screen.xterm-256color"
+	set bg=dark
+endif
+
 " colorscheme elflord
 
 nnoremap <F4>	viwc<C-r>0<Esc>
