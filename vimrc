@@ -104,3 +104,9 @@ au FileType markdown setlocal expandtab
 
 " reStructuredText
 au FileType rst setlocal colorcolumn=81
+
+" LaTeX
+au FileType tex setlocal colorcolumn=81
+
+" JSON
+au FileType json setlocal ts=2 sw=2
