@@ -26,11 +26,6 @@ set incsearch
 set hlsearch
 
 " Key bindings
-nnoremap <F7>	:tabp<CR>
-nnoremap <F8>	:tabn<CR>
-inoremap <F7>	<Esc>:tabp<CR>a
-inoremap <F8>	<Esc>:tabn<CR>a
-
 nnoremap <C-h>	:tabp<CR>
 nnoremap <C-l>	:tabn<CR>
 inoremap <C-h>	<Esc>:tabp<CR>a
@@ -46,28 +41,11 @@ if &term == "screen.xterm-256color"
 	set bg=dark
 endif
 
-" colorscheme elflord
+colorscheme elflord
 
 nnoremap <F4>	viwc<C-r>0<Esc>
 
 let g:LargeFile=10
-
-" Vundle.vim
-" filetype off
-" 
-" set rtp+=~/.vim/bundle/Vundle.vim
-" call vundle#begin()
-" 
-" " let Vundle manage itself
-" Plugin 'VundleVim/Vundle.vim'
-" Bundle 'Rykka/riv.vim'
-" Bundle 'Rykka/InstantRst'
-" 
-" call vundle#end()
-" 
-" 
-" " riv configuration
-" let g:riv_global_leader=''
 
 
 filetype plugin on
@@ -100,7 +78,7 @@ au FileType cmake setlocal colorcolumn=81 fo-=t
 au FileType python setlocal colorcolumn=80 tw=79 fo-=t
 
 " Markdown
-au FileType markdown setlocal expandtab
+au FileType markdown setlocal expandtab colorcolumn=80 tw=79
 
 " reStructuredText
 au FileType rst setlocal colorcolumn=81
@@ -110,3 +88,18 @@ au FileType tex setlocal colorcolumn=81
 
 " JSON
 au FileType json setlocal ts=2 sw=2
+
+" call plug#begin()
+" 	Plug 'preservim/nerdtree'
+" 	Plug 'Xuyuanp/nerdtree-git-plugin'
+" 	Plug 'ryanoasis/vim-devicons'
+" 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" 	Plug 'davidhalter/jedi-vim'
+" 	Plug 'tpope/vim-fugitive'
+" call plug#end()
+" 
+" nnoremap <C-n> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
+" 
+" let g:jedi#popup_select_first = 0
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#show_call_signatures = 0
