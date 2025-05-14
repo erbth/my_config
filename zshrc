@@ -1,7 +1,7 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zhistory
 HISTSIZE=1000
-SAVEHIST=1000
+SAVEHIST=100000
 setopt appendhistory autocd nomatch
 unsetopt beep extendedglob notify
 bindkey -e
@@ -11,10 +11,17 @@ zstyle :compinstall filename '/home/therb/.zshrc'
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
+
+# History:
+# fc -RI  load history file
+# fc -AI  save to history file
 
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
+esac
+
+case "$TERM" in
+	xterm*|rxvt*) terminal_emulator_prompt=yes;;
 esac
 
 if [ -n "$force_color_prompt" ]; then
@@ -38,6 +45,14 @@ unset color_prompt force_color_prompt
 # Bash-style word navigation
 autoload -U select-word-style
 select-word-style bash
+
+# host, cwd in terminal emulator title
+if [ "$terminal_emulator_prompt" = yes ]
+then
+	precmd() {
+		print -Pn "\e]0;%n@%m: %~\a"
+	}
+fi
 
 # Skip words with arrow keys
 bindkey "^[[1;5C" forward-word
@@ -71,7 +86,11 @@ DEBFULLNAME="Thomas Erbesdobler"
 export DEBEMAIL DEBFULLNAME
 
 # OPAM configuration
-. /home/therb/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+#. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
-# Cross compiler
-# PATH="$HOME/software/gcc/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf/bin:$PATH"
+case $TERM in
+    dumb)
+        PS1='$ '
+        unset zle
+        ;;
+esac

@@ -89,6 +89,9 @@ au FileType tex setlocal colorcolumn=81
 " JSON
 au FileType json setlocal ts=2 sw=2
 
+" P4
+au BufRead,BufNewFile *.p4 setlocal filetype=p4
+
 " call plug#begin()
 " 	Plug 'preservim/nerdtree'
 " 	Plug 'Xuyuanp/nerdtree-git-plugin'

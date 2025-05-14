@@ -118,4 +118,4 @@ DEBFULLNAME="Thomas Erbesdobler"
 export DEBEMAIL DEBFULLNAME
 
 # OPAM configuration
-. /home/therb/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+#. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
