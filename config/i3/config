@@ -147,8 +147,8 @@ bindsym XF86MonBrightnessUp		exec ~/scripts/backlight -i
 set $volumepath ~/scripts/i3-volume/volume
 set $volumestep 5
 
-bindsym XF86AudioRaiseVolume exec $volumepath -anp -i $volumestep
-bindsym XF86AudioLowerVolume exec $volumepath -anp -d $volumestep
+bindsym XF86AudioRaiseVolume exec $volumepath -an -i $volumestep
+bindsym XF86AudioLowerVolume exec $volumepath -an -d $volumestep
 bindsym XF86AudioMute        exec $volumepath -amn
 bindsym XF86AudioMicMute exec amixer -q set Capture toggle
 
