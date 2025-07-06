@@ -94,3 +94,8 @@ case $TERM in
         unset zle
         ;;
 esac
+
+manc()
+{
+	LANG=C man $@
+}

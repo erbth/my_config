@@ -119,3 +119,8 @@ export DEBEMAIL DEBFULLNAME
 
 # OPAM configuration
 #. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+manc()
+{
+	LANG=C man $@
+}
