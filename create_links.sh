@@ -35,19 +35,24 @@ do
 	fi
 done
 
-for LINK in "$BASENAME/config"/*
-do
-	from="$LINK"
-	to="$HOME/.config/$(basename "$LINK")"
+if [ -d "$HOME/.config" ]
+then
+	for LINK in "$BASENAME/config"/*
+	do
+		from="$LINK"
+		to="$HOME/.config/$(basename "$LINK")"
 
-	if [ ! -L "$to" ]
-	then
-		if [ -e "$to" ]
+		if [ ! -L "$to" ]
 		then
-			rm -ri "$to"
-		fi
+			if [ -e "$to" ]
+			then
+				rm -ri "$to"
+			fi
 
-		echo "$from --> $to"
-		ln -s "$from" "$to" 
-	fi
-done
+			echo "$from --> $to"
+			ln -s "$from" "$to" 
+		fi
+	done
+else
+	echo "$HOME/.config does not exist - skipping"
+fi
