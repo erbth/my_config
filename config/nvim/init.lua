@@ -307,6 +307,35 @@ require('lazy').setup({
 			statusline.section_location = function() return '%2l:%-2v' end
 		end,
 	},
+
+	-- Neo-tree
+	{
+		'nvim-neo-tree/neo-tree.nvim',
+		version = '*',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			{
+				'nvim-tree/nvim-web-devicons',
+				enabled = vim.g.have_nerd_font
+			},
+			'MunifTanjim/nui.nvim'
+		},
+		lazy = false,  -- neo-tree will lazily load itself
+		keys = {
+			{ '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+		},
+		---@module 'neo-tree
+		---@type neotree.Config
+		opts = {
+			filesystem = {
+				window = {
+					mappings = {
+						['\\'] = 'close_window',
+					},
+				},
+			},
+		},
+	},
 }, {
 	ui = {
 		-- Default to unicode icons if no nerdfont is avialable
