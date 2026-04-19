@@ -19,9 +19,9 @@ vim.o.smartcase = true
 vim.o.signcolumn = 'auto'
 vim.o.updatetime = 4000
 vim.o.timeoutlen = 300
-vim.o.splitright = true
-vim.o.splitbelow = true
-vim.o.list = true
+vim.o.splitright = false
+vim.o.splitbelow = false
+vim.o.list = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 vim.o.inccommand = 'split'
@@ -30,6 +30,12 @@ vim.o.cursorline = false
 vim.o.scrolloff = 0
 
 vim.o.confirm = false
+
+vim.o.formatoptions = 'tcroqlj'
+vim.o.textwidth = 80
+
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
 
 -- [[ Keymaps ]]
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -64,10 +70,10 @@ vim.keymap.set('n', '<C-S-l>', '<C-w>L', { desc = 'Move window to the right' })
 vim.keymap.set('n', '<C-S-j>', '<C-w>J', { desc = 'Move window to the lower' })
 vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
 
-vim.keymap.set('n', '<C-A-h>', function() vim.cmd(':tabp') end, { desc = 'Switch to previous tab' })
-vim.keymap.set('n', '<C-A-l>', function() vim.cmd(':tabn') end, { desc = 'Switch to next tab' })
-vim.keymap.set('n', '<C-A-S-h>', function() vim.cmd(':tabm-1') end, { desc = 'Move tab left' })
-vim.keymap.set('n', '<C-A-S-l>', function() vim.cmd(':tabm+1') end, { desc = 'Move tab right' })
+vim.keymap.set({'n', 'i'}, '<C-A-h>', function() vim.cmd(':tabp') end, { desc = 'Switch to previous tab' })
+vim.keymap.set({'n', 'i'}, '<C-A-l>', function() vim.cmd(':tabn') end, { desc = 'Switch to next tab' })
+vim.keymap.set({'n', 'i'}, '<C-A-S-h>', function() vim.cmd(':tabm-1') end, { desc = 'Move tab left' })
+vim.keymap.set({'n', 'i'}, '<C-A-S-l>', function() vim.cmd(':tabm+1') end, { desc = 'Move tab right' })
 
 
 -- [[ Autocommands ]]
@@ -76,6 +82,26 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 	desc = 'Highlight when yanking (copying) text',
 	group = vim.api.nvim_create_augroup('mycfg-highlight-yank', { clear = true }),
 	callback = function() vim.highlight.on_yank() end,
+})
+
+local filetype_group = vim.api.nvim_create_augroup('mycfg-filetype', { clear = true})
+vim.api.nvim_create_autocmd('FileType', {
+	group = filetype_group,
+	pattern = "markdown",
+	callback = function()
+		vim.bo.expandtab = true
+		vim.opt.colorcolumn = "80"
+		vim.bo.textwidth = 79
+	end
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+	group = filetype_group,
+	pattern = "cmake",
+	callback = function()
+		vim.opt.colorcolumn = '81'
+		vim.bo.formatoptions = 'croqlj'
+	end
 })
 
 
@@ -135,6 +161,89 @@ require('lazy').setup({
 				{ 'gr', group = 'LSP Actions', mode = { 'n' } },
 			},
 		},
+	},
+
+	{	-- Fuzzy Finder (files, lsp, etc.)
+		'nvim-telescope/telescope.nvim',
+		version = "0.2.x",
+		enabled = true,
+		event = 'VimEnter',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			{
+				'nvim-telescope/telescope-fzf-native.nvim',
+				build = 'make',
+				cond = function() return vim.fn.executable 'make' == 1 end,
+			},
+			{
+				'nvim-telescope/telescope-ui-select.nvim'
+			},
+			{
+				'nvim-tree/nvim-web-devicons',
+				enabled = vim.g.have_nerd_font
+			},
+		},
+		config = function()
+			-- :Telescope help_tags
+			-- While in telescope:
+			--   - Insert mode: <c-/>
+			--   - Normal mode: ?
+
+			-- [[ Configure Telescope ]]
+			-- See `:help telescope` and `:help telescope.setup()`
+			require('telescope').setup {
+				extensions = {
+					['ui-select'] = { require('telescope.themes').get_dropdown() },
+				},
+			}
+
+			-- Enable Telescope extensions if they are installed
+			pcall(require('telescope').load_extension, 'fzf')
+			pcall(require('telescope').load_extension, 'ui-select')
+
+			-- See `:help telescope.builtin`
+			local builtin = require 'telescope.builtin'
+			vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+			vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+			vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+			vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+			vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+			vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+			vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+			vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+			vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+			vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
+			vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+			-- Override default behavior and theme when searching
+			vim.keymap.set('n', '<leader>/', function()
+				builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+					winblend = 10,
+					previewer = false,
+				})
+			end, { desc = '[/] Fuzzily search in current buffer' })
+
+			-- Additional configuration options
+			--  See `:help telescope.builtin.live_grep()`
+			vim.keymap.set(
+				'n',
+				'<leader>s/',
+				function()
+					builtin.live_grep {
+						grep_open_files = true,
+						prompt_title = 'Live Grep in Open Files',
+					}
+				end,
+				{ desc = '[S]earch [/] in Open Files' }
+			)
+
+			vim.keymap.set(
+				'n',
+				'<leader>sn',
+				function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end,
+				{ desc = '[S]earch [N]eovim files' }
+			)
+		end
 	},
 
 	{   -- You can easily change to a different colorscheme.

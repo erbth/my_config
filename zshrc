@@ -99,3 +99,5 @@ manc()
 {
 	LANG=C man $@
 }
+
+alias nview='nvim -R'
