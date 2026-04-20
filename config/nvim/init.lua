@@ -104,6 +104,34 @@ vim.api.nvim_create_autocmd('FileType', {
 	end
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+	group = filetype_group,
+	pattern = "c",
+	callback = function()
+		vim.opt.colorcolumn = '81'
+		vim.bo.formatoptions = 'croqlj'
+	end
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+	group = filetype_group,
+	pattern = "cpp",
+	callback = function()
+		vim.opt.colorcolumn = '81'
+		vim.bo.formatoptions = 'croqlj'
+	end
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+	group = filetype_group,
+	pattern = "python",
+	callback = function()
+		vim.bo.textwidth = 79
+		vim.opt.colorcolumn = '80'
+		vim.bo.formatoptions = 'croqlj'
+	end
+})
+
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --  See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim
@@ -271,6 +299,7 @@ require('lazy').setup({
 	-- Highlight todo, notes, etc in comments
 	{
 		'folke/todo-comments.nvim',
+		enabled = false,
 		event = 'VimEnter',
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		---@module 'todo-comments'
