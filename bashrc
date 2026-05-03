@@ -124,3 +124,15 @@ manc()
 {
 	LANG=C man $@
 }
+
+alias nview='nvim -R'
+
+if [ -e "$HOME/.local_bashrc" ]
+then
+	. "$HOME/.local_bashrc"
+fi
+
+if [ -e "$HOME/.local_shellrc" ]
+then
+	. "$HOME/.local_shellrc"
+fi

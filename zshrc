@@ -101,3 +101,13 @@ manc()
 }
 
 alias nview='nvim -R'
+
+if [ -e "$HOME/.local_zshrc" ]
+then
+	. "$HOME/.local_zshrc"
+fi
+
+if [ -e "$HOME/.local_shellrc" ]
+then
+	. "$HOME/.local_shellrc"
+fi

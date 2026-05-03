@@ -16,7 +16,7 @@ vim.o.undofile = false
 
 vim.o.ignorecase = true
 vim.o.smartcase = true
-vim.o.signcolumn = 'auto'
+vim.o.signcolumn = 'no'
 vim.o.updatetime = 4000
 vim.o.timeoutlen = 300
 vim.o.splitright = false
@@ -35,7 +35,10 @@ vim.o.formatoptions = 'tcroqlj'
 vim.o.textwidth = 80
 
 vim.o.tabstop = 4
+vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
+
+vim.cmd.colorscheme 'elflord'
 
 -- [[ Keymaps ]]
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -193,7 +196,6 @@ require('lazy').setup({
 
 	{	-- Fuzzy Finder (files, lsp, etc.)
 		'nvim-telescope/telescope.nvim',
-		version = "0.2.x",
 		enabled = true,
 		event = 'VimEnter',
 		dependencies = {
@@ -274,27 +276,51 @@ require('lazy').setup({
 		end
 	},
 
-	{   -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
-		--
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		'folke/tokyonight.nvim',
-		priority = 1000, -- Make sure to load this before all the other start plugins.
+	-- LSP
+	{
+		'neovim/nvim-lspconfig',
+		dependencies = {
+			{ 'j-hui/fidget.nvim', opts = {} },
+		},
 		config = function()
-			---@diagnostic disable-next-line: missing-fields
-			require('tokyonight').setup {
-				styles = {
-					comments = { italic = false }, -- Disable italics in comments
-				},
-			}
+			vim.api.nvim_create_autocmd('LspAttach', {
+				group = vim.api.nvim_create_augroup('mycfg-lsp-attach', { clear = true }),
+				callback = function(event)
+					local map = function(keys, func, desc, mode)
+						mode = mode or 'n'
+						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+					end
 
-			-- Load the colorscheme here.
-			-- Like many other themes, this one has different styles, and you could load
-			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme 'tokyonight-night'
+					map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+				end
+			})
 		end,
+
+		-- Configure servers
+		vim.lsp.config('clangd', {})
 	},
+
+	-- {   -- You can easily change to a different colorscheme.
+	-- 	-- Change the name of the colorscheme plugin below, and then
+	-- 	-- change the command in the config to whatever the name of that colorscheme is.
+	-- 	--
+	-- 	-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+	-- 	'folke/tokyonight.nvim',
+	-- 	priority = 1000, -- Make sure to load this before all the other start plugins.
+	-- 	config = function()
+	-- 		---@diagnostic disable-next-line: missing-fields
+	-- 		require('tokyonight').setup {
+	-- 			styles = {
+	-- 				comments = { italic = false }, -- Disable italics in comments
+	-- 			},
+	-- 		}
+
+	-- 		-- Load the colorscheme here.
+	-- 		-- Like many other themes, this one has different styles, and you could load
+	-- 		-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+	-- 		vim.cmd.colorscheme 'tokyonight-night'
+	-- 	end,
+	-- },
 
 	-- Highlight todo, notes, etc in comments
 	{
