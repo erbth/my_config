@@ -245,6 +245,15 @@ require('lazy').setup({
 			vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
 			vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
+			vim.api.nvim_create_autocmd('LspAttach', {
+				group = vim.api.nvim_create_augroup('mycfg-telescope-lsp-attach', { clear = true }),
+				callback = function(event)
+					local buf = event.buf
+
+					vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+				end
+			})
+
 			-- Override default behavior and theme when searching
 			vim.keymap.set('n', '<leader>/', function()
 				builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
