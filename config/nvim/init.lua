@@ -19,8 +19,8 @@ vim.o.smartcase = true
 vim.o.signcolumn = 'no'
 vim.o.updatetime = 4000
 vim.o.timeoutlen = 300
-vim.o.splitright = false
-vim.o.splitbelow = false
+vim.o.splitright = true
+vim.o.splitbelow = true
 vim.o.list = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
@@ -250,7 +250,12 @@ require('lazy').setup({
 				callback = function(event)
 					local buf = event.buf
 
+					vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
+					vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
+					vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
+					vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
 					vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+					vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
 				end
 			})
 
@@ -306,7 +311,8 @@ require('lazy').setup({
 		end,
 
 		-- Configure servers
-		vim.lsp.config('clangd', {})
+		vim.lsp.config('clangd', {}),
+		vim.lsp.config('pylsp', {})
 	},
 
 	-- {   -- You can easily change to a different colorscheme.
