@@ -95,9 +95,20 @@ case $TERM in
         ;;
 esac
 
+# Convenience functions and aliases
 manc()
 {
 	LANG=C man $@
+}
+compdef _man manc
+
+fname()
+{
+	find -iname "$1"
+}
+fdir()
+{
+	find -type d -iname "$1"
 }
 
 alias nview='nvim -R'

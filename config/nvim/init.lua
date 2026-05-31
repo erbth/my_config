@@ -406,6 +406,23 @@ require('lazy').setup({
 			},
 		},
 	},
+
+	-- orgmode.nvim
+	{
+		'nvim-orgmode/orgmode',
+		event = 'VeryLazy',
+		ft = { 'org' },
+		config = function()
+			-- setup orgmode
+			require('orgmode').setup({
+				org_agenda_files = '~/org/**/*',
+				org_default_notes_file = '~/org/refile.org',
+			})
+
+			-- Experimental LSP support
+			--vim.lsp.enable('org')
+		end,
+	},
 }, {
 	ui = {
 		-- Default to unicode icons if no nerdfont is avialable
